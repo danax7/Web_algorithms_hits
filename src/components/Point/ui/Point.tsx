@@ -10,6 +10,6 @@ const Point = (props: IPoint) => {
     height: "8px",
     borderRadius: "50%",
   };
-  return <div style={pointStyle}></div>;
+  return <div style={pointStyle}></div>; //сделать массив из цветов и по его количеству засовывать сюда flex объекты
 };
 export default Point;

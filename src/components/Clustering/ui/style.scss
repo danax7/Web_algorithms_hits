@@ -14,3 +14,17 @@
   height: 400px;
   margin-bottom: 20px;
 }
+
+.panelDBSCAN {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  button {
+    margin: 0;
+  }
+}
+
+button {
+  margin-bottom: 10px;
+}
