@@ -1,9 +1,12 @@
-export function getClaster(count: number): { x: number[]; y: number[] } {
-  let x: number[] = Array(3).fill(0);
-  let y: number[] = Array(3).fill(0);
+import { IPoint } from "../types/Point";
 
-  x = x.map(() => Math.floor(Math.random() * 400));
-  y = y.map(() => Math.floor(Math.random() * 400));
-
-  return { x, y };
+export function getClaster(count: number): IPoint[] {
+  let klasters: IPoint[] = Array(count).fill({ x: 0, y: 0 });
+  klasters = klasters.map(() => {
+    return {
+      x: Math.floor(Math.random() * 400),
+      y: Math.floor(Math.random() * 400),
+    };
+  });
+  return klasters;
 }
