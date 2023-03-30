@@ -24,7 +24,7 @@
       <div class="Options_block">
 
         <p><b class="Text">Размер лабиринта:</b>
-          <input id="matrixSize" type="range" min="5" max="200" value="20" class="range" onchange="document.getElementById('rangeValue').innerHTML = this.value">
+          <input id="matrixSize" type="range" min="5" max="200" value="20" class="range" onchange="changeMatrixSize()">
           <span id="rangeValue">20</span>
 
         <p><b class="Text">Выберите скорость:</b>
@@ -50,13 +50,7 @@
     </div>
     <div>
       <script src="a_star.js"></script>
-      <script>
-        document.addEventListener("DOMContentLoaded", function(){
-        CreateMazes();
-        });
-
-        
-      </script>
+    
 </body>
 
 </html>

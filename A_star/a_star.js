@@ -33,6 +33,17 @@ function DrawInCanvas(color, x, y) {
   contex.fill();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  CreateMazes();
+});
+
+function changeMatrixSize() {
+  var matrixSize = document.getElementById("matrixSize").value;
+  document.getElementById("rangeValue").innerHTML = matrixSize;
+  canvas.clear();
+  CreateMazes();
+}
+
 //создание матрицы и генерация лабиринта
 function randomInteger(min, max) {
   let rand = min + Math.random() * (max + 1 - min);
