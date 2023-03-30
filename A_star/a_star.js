@@ -195,6 +195,7 @@ function RemoveWall() {
   RemoveWallButton = true;
 }
 
+//Нажатие на canvas в соответствующих условиях
 canvas.addEventListener("mousedown", function (e) {
   let cordX, cordY;
   cordX = e.pageX - this.offsetLeft;
@@ -240,13 +241,14 @@ function DrawStart() {
 }
 
 //алгоритм А*
+//Значение эвристической функции - это оценка стоимости достижения цели или решения задачи
 
 class Node {
   constructor(value, f, g, h, X, Y) {
     this.value = value;
-    this.f = f; //сколько энергии нам понадобится, мы предсказываем нам понадобится, чтобы добраться до конца используя этот узел
-    this.h = h;
-    this.g = g; //вес, сколько энергии нам понадобилось, чтобы добраться до этого узла
+    this.f = f; //энергия, которую мы потратили, чтобы добраться до этого узла
+    this.h = h; //значение эвристики, которое мы используем для оценки расстояния от текущего узла до конечного узла
+    this.g = g; //расстояние от текущего узла до конечного узла
     this.X = X;
     this.Y = Y;
   }
@@ -273,18 +275,7 @@ let OpenList = [];
 let CloseList = [];
 
 function GetDist(first, second) {
-  var sel = document.getElementById("Select").selectedIndex;
-  if (sel === 0) {
-    return Math.abs(first.x - second.x) + Math.abs(first.y - second.y); //эвристическая функция манх
-  }
-  if (sel === 1) {
-    return Math.max(Math.abs(first.x - second.x), Math.abs(first.y - second.y)); //Расстояние Чебышева
-  }
-  if (sel === 2) {
-    return Math.sqrt(
-      Math.pow(first.x - second.x, 2) + Math.pow(first.y - second.y, 2)
-    ); //Евклидово расстояние
-  }
+  return Math.abs(first.x - second.x) + Math.abs(first.y - second.y); //эвристическая функция - манхэттенское расстояние (Приблизительное расстояние между двумя точками)
 }
 
 function isClosed(temp) {
@@ -324,7 +315,6 @@ function getMinCell() {
 
 var cell = new Cell(0, 0);
 
-//Нахождение пути и установление веса каждо
 function CheckPath(current) {
   let x = current.x;
   let y = current.y;
@@ -459,16 +449,26 @@ async function DrawCurrent() {
 }
 
 function SpeedSelection() {
-  document.getElementById("Speed").addEventListener("mouseup", function () {
-    speed = Number(document.getElementById("Speed").value);
-  });
-  let num = 5;
-  for (let i = 1; i <= 2; i++) {
-    if (speed <= i) {
-      num += 15;
-    }
+  const speedInput = document.getElementById("Speed");
+  const speed = Number(speedInput.value);
+  if (speed === 6) {
+    return 0;
   }
-  return num;
+  const maxSpeed = 6;
+  const minDelay = 10; // minimum delay in ms
+  const maxDelay = 50; // maximum delay in ms
+  const delayRange = maxDelay - minDelay;
+  const speedStep = maxSpeed / delayRange;
+  const delay = Math.round(minDelay + (maxSpeed - speed) / speedStep);
+  speedInput.addEventListener("mouseup", function () {
+    if (speedInput.value === 6) {
+      return 0;
+    }
+    delay = Math.round(
+      minDelay + (maxSpeed - Number(speedInput.value)) / speedStep
+    );
+  });
+  return delay;
 }
 
 async function AStar() {
