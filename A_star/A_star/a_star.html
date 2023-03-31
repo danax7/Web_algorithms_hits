@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <title>D</title>
+</head>
+
+<body>
+  <div class="sidenav">
+    <a href="../a-star/a-star_view.html">А*</a>
+
+  </div>
+
+  <header>Алгоритм А*</header>
+  <div class="wrapper">
+
+    <div class="canvas_block">
+      <canvas id="canvas" width="730px" height="730px"></canvas>
+    </div>
+
+    <div class="main">
+      <div class="Options_block">
+
+        <p><b class="Text">Размер лабиринта:</b>
+          <input id="matrixSize" type="range" min="5" max="200" value="40" class="range" onchange="changeMatrixSize()" >
+          <span id="rangeValue">40</span>
+
+        <p><b class="Text">Выберите скорость:</b>
+          <input id="Speed" type="range" min="1" max="6" value="5" class="range" onchange="document.getElementById('range').innerHTML = this.value">
+          <span id='range'>5</span>
+       
+          <button class="btn" onclick="CreateMazes()">Сгенерировать лабиринт</button>
+          <button class="btn" onclick="DrawStart()">Старт</button>
+          <button class="btn" onclick="DrawFinish()">Финиш</button>
+          <button class="btn" onclick="CreateWall()">Поставить стену</button>
+          <button class="btn" onclick="RemoveWall()">Убрать стену</button>
+          <button class="btn" onclick="FindingPath()">Начать</button>
+          <button class="btn" onclick="canvas.clear()">Очистить</button>
+
+      </div>
+    </div>
+    <div>
+      <script src="a_star.js"></script>
+    
+</body>
+
+</html>
