@@ -380,13 +380,12 @@ function CheckPath(current) {
   }
 
   CloseList.push(current);
-  OpenList.splice(index, 1);
+  OpenList.splice(index, 1); //удаляем из списка открытых вершин текущую вершину
   if (OpenList.length === 0) {
     return 0;
   }
   current = getMinCell();
   //CheckPath(current);
-
   return 0;
 }
 
