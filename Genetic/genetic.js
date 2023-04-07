@@ -1,142 +1,293 @@
-//Базовый вариант - решение задачи коммивояжёра. Вы генерируете плоскость, на которой пользователь расставляет точки - вершины графа. Веса ребёр - расстояние на плоскости между вершинами. Ваша задача - реализовать генетический алгоритм, который построит путь коммивояжера по этому графу. Пока алгоритм работает, вы показываете лучшую особь на последней достигнутой итерации алгоритма. Следовательно, при завершении алгоритма лучшая особь - потенциально лучший путь коммивояжера.
+const Fcolor = "#1bc2ae";
 
-// Создание объекта canvas
-var canvas = document.createElement("canvas");
-var ctx = canvas.getContext("2d");
-document.body.appendChild(canvas);
+var canvas = document.getElementById("canvas"),
+  ctx = canvas.getContext("2d");
+var dots = [];
+var flag = true;
+constMutation = 10;
+ConstRelativeChance = 10;
+const populationSize = 100;
 
-// Задание размеров canvas
-var width = (canvas.width = window.innerWidth);
-var height = (canvas.height = window.innerHeight);
-
-function DrawInCanvas(color, x, y) {
-  contex.beginPath();
-  contex.rect(x * Cellsize, y * Cellsize, Cellsize, Cellsize);
-  contex.fillStyle = color;
-  contex.fill();
-}
-
-// Создание массива точек
-var points = [];
-for (var i = 0; i < 50; i++) {
-  points.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-  });
-}
-//Создание и отрисовка точек по щелчку мыши
-canvas.addEventListener("click", function (event) {
-  points.push({
-    x: event.clientX,
-    y: event.clientY,
-  });
-  DrawInCanvas("black", event.clientX, event.clientY);
+canvas.addEventListener("mousedown", function (e) {
+  var x, y;
+  x = e.pageX - this.offsetLeft;
+  y = e.pageY - this.offsetTop;
+  dots.push([x, y]);
+  ctx.beginPath();
+  ctx.arc(x, y, 8, 0, Math.PI * 2);
+  ctx.fillStyle = Fcolor;
+  ctx.fill();
 });
 
-// Создание начальной популяции
-var population = [];
-var populationSize = 100;
-for (var i = 0; i < populationSize; i++) {
-  population.push(shuffle(points.slice()));
+function clearFull() {
+  ctx.clearRect(0, 0, 800, 730);
+  ctx.fillStyle = "black";
+  dots = [];
+  flag = false;
 }
 
-// Функция перемешивания массива
-function shuffle(array) {
-  var copy = array.slice();
-  for (var i = 0; i < copy.length; i++) {
-    var j = Math.floor(Math.random() * copy.length);
-    var temp = copy[i];
-    copy[i] = copy[j];
-    copy[j] = temp;
-  }
-  return copy;
+var counterVal = 0;
+
+function getRandom(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
 }
 
-// Функция вычисления длины маршрута
-function distance(points) {
-  var sum = 0;
-  for (var i = 1; i < points.length; i++) {
-    var dx = points[i].x - points[i - 1].x;
-    var dy = points[i].y - points[i - 1].y;
-    sum += Math.sqrt(dx * dx + dy * dy);
-  }
-  return sum;
-}
+const delay = (delayInms) => {
+  return new Promise((resolve) => setTimeout(resolve, delayInms));
+};
 
-// Функция селекции особей
-function selection(population) {
-  var sorted = population.slice().sort(function (a, b) {
-    return distance(a) - distance(b);
+function drawDots() {
+  ctx.fillStyle = "#1bc2ae";
+  dots.forEach((dot) => {
+    ctx.beginPath();
+    ctx.arc(dot[0], dot[1], 8, 0, Math.PI * 2);
+    ctx.fill();
   });
-  return sorted.slice(0, populationSize / 2);
 }
 
-// Функция кроссинговера
-function crossover(a, b) {
-  var start = Math.floor(Math.random() * a.length);
-  var end = Math.floor(Math.random() * a.length);
-  if (start > end) {
-    var temp = start;
-    start = end;
-    end = temp;
+function stopAll() {
+  flag = false;
+}
+
+function createPath(bestPath) {
+  ctx.clearRect(0, 0, 800, 730);
+  for (let i = 0; i < dots.length; i++) {
+    ctx.beginPath();
+    ctx.arc(dots[i][0], dots[i][1], 8, 0, Math.PI * 2);
+    ctx.fill();
   }
-  var child = a.slice(start, end);
-  for (var i = 0; i < b.length; i++) {
-    var point = b[i];
-    if (!child.includes(point)) {
-      child.push(point);
+
+  for (i = 0; i < bestPath.length - 2; i++) {
+    ctx.beginPath();
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = "black";
+    ctx.moveTo(dots[bestPath[i]][0], dots[bestPath[i]][1]);
+    ctx.lineTo(dots[bestPath[i + 1]][0], dots[bestPath[i + 1]][1]);
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(dots[bestPath[0]][0], dots[bestPath[0]][1]);
+  ctx.lineTo(
+    dots[bestPath[bestPath.length - 2]][0],
+    dots[bestPath[bestPath.length - 2]][1]
+  );
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function updateRangeValue(value) {
+  document.getElementById("rangeValue").innerHTML = value;
+}
+
+function addRandomPoint() {
+  const count = document.getElementById("dotsCount").value;
+  for (let i = 0; i < count; i++) {
+    dots.push([getRandom(0, 800), getRandom(0, 730)]);
+  }
+  drawDots();
+}
+// function addRandomPoint() {
+//   var x = getRandom(0, canvas.width);
+//   var y = getRandom(0, canvas.height);
+//   dots.push([x, y]);
+//   ctx.beginPath();
+//   ctx.arc(x, y, 8, 0, Math.PI * 2);
+//   ctx.fillStyle = Fcolor;
+//   ctx.fill();
+// }
+//Служебные функции для отрисовки пути и точек
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+async function start() {
+  counterVal = 0;
+  if (dots.length > 1) {
+    flag = true;
+    var population = [],
+      count = 0;
+    createPopulation(population);
+    while (flag) {
+      getCross(population);
+      population = selection(population);
+      createPath(population[0]);
+      count++;
+      await delay(5);
     }
+  } else alert("Необходимо как минимум две точки");
+}
+
+//Алоритм скрещивания
+//Генерация новых хромосом из двух родительских в популяции
+//https://www.youtube.com/watch?v=ufAHNtZkO_A
+function getCross(population) {
+  var randomParents = [];
+
+  for (let i = 0; i < populationSize; i++) {
+    randomParents[i] = getRandom(0, 100);
+  }
+
+  var IndexParents = [];
+
+  for (let i = 0; i < populationSize; i++) {
+    if (randomParents[i] > ConstRelativeChance) IndexParents.push(i);
+  }
+
+  if (IndexParents.length % 2 !== 0) IndexParents.pop();
+  var childFirst = [],
+    childSecond = [],
+    parentSizeOne = 0,
+    parentSizeTwo = 0;
+
+  if (dots.length % 2 === 0) {
+    parentSizeOne = Math.floor(dots.length / 2);
+    parentSizeTwo = Math.floor(dots.length / 2);
+  } else {
+    parentSizeOne = Math.floor(dots.length / 2);
+    parentSizeTwo = Math.floor(dots.length / 2) + 1;
+  }
+
+  // Все эти циклы помогают создать два потомка,
+  // каждый из которых получен из двух родительских хромосом.
+  // Элементы добавляются в потомков таким образом, чтобы они не дублировались,
+  // и было максимально сохранено наследие обоих родительских хромосом.
+
+  for (let i = 0; i < IndexParents.length - 1; i += 2) {
+    (childFirst = []), (childSecond = []);
+
+    for (let indexX = 0; indexX < parentSizeOne; indexX++) {
+      childFirst.push(population[i][indexX]);
+    }
+
+    for (let indexY = parentSizeOne; indexY < dots.length; indexY++) {
+      if (!childFirst.includes(population[i + 1][indexY]))
+        childFirst.push(population[i + 1][indexY]);
+    }
+
+    for (let indexX = 0; indexX < dots.length; indexX++) {
+      if (!childFirst.includes(population[i][indexX]))
+        childFirst.push(population[i][indexX]);
+    }
+
+    for (let indexX = 0; indexX < parentSizeOne; indexX++) {
+      childSecond.push(population[i + 1][indexX]);
+    }
+
+    for (let indexY = parentSizeOne; indexY < dots.length; indexY++) {
+      if (!childSecond.includes(population[i][indexY]))
+        childSecond.push(population[i][indexY]);
+    }
+
+    for (let indexX = 0; indexX < dots.length; indexX++) {
+      if (!childSecond.includes(population[i + 1][indexX]))
+        childSecond.push(population[i + 1][indexX]);
+    }
+
+    if (getRandom(0, 100) > constMutation) childFirst = mutation(childFirst);
+    if (getRandom(0, 100) > constMutation) childSecond = mutation(childSecond);
+    childFirst = findPath(childFirst);
+    childSecond = findPath(childSecond);
+    population.push(childFirst);
+    population.push(childSecond);
+  }
+}
+
+function mutation(child) {
+  var mut = [];
+  var i = getRandom(0, child.length - 1);
+  var j = getRandom(0, child.length - 1);
+  while (i === j) {
+    j = getRandom(0, child.length - 1);
+  }
+  var maxx = Math.max(i, j);
+  var minn = Math.min(i, j);
+  mut = child.slice(minn, maxx + 1);
+  mut.reverse();
+  for (let h = minn, g = 0; h <= maxx; h++) {
+    child[h] = mut[g];
+    g++;
   }
   return child;
 }
 
-// Функция мутации
-function mutation(points) {
-  var i = Math.floor(Math.random() * points.length);
-  var j = Math.floor(Math.random() * points.length);
-  var temp = points[i];
-  points[i] = points[j];
-  points[j] = temp;
+function selection(population) {
+  var newPopulation = [];
+
+  while (newPopulation.length < populationSize) {
+    var minn = 1000000,
+      gen = [],
+      constI = 0;
+    for (let i = 0; i < population.length; i++) {
+      if (
+        population[i] !== undefined &&
+        minn > population[i][dots.length] &&
+        newPopulation.includes(gen) !== true
+      ) {
+        minn = population[i][dots.length];
+
+        gen = population[i];
+        constI = i;
+      }
+    }
+
+    newPopulation.push(gen);
+  }
+
+  return newPopulation;
 }
 
-// Главный цикл алгоритма
-var best = null;
-var iteration = 0;
-function loop() {
-  ctx.clearRect(0, 0, width, height);
-
-  // Вычисление длины лучшего маршрута и отображение его на canvas
-  var bestDistance = distance(population[0]);
-  if (best == null || bestDistance < distance(best)) {
-    best = population[0];
-  }
-  ctx.beginPath();
-  ctx.moveTo(best[0].x, best[0].y);
-  for (var i = 1; i < best.length; i++) {
-    ctx.lineTo(best[i].x, best[i].y);
-  }
-  ctx.lineTo(best[0].x, best[0].y);
-  ctx.stroke();
-
-  // Отображение точек на canvas
-  for (var i = 0; i < points.length; i++) {
-    ctx.beginPath();
-    ctx.arc(points[i].x, points[i].y, 2, 0, Math.PI * 2);
-    ctx.fill();
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
   }
 
-  // Создание новой популяции
-  var newPopulation = selection(population);
-  for (var i = 0; i < populationSize / 2; i++) {
-    var a = Math.floor(Math.random() * newPopulation.length);
-    var b = Math.floor(Math.random() * newPopulation.length);
-    var child = crossover(newPopulation[a], newPopulation[b]);
-    mutation(child);
-    newPopulation.push(child);
+  return array;
+}
+
+function createPopulation(population) {
+  for (let i = 0; i < populationSize; i++) {
+    var randomMass = [];
+    for (let i = 0; i < dots.length; i++) {
+      randomMass.push(i);
+    }
+    randomMass = shuffle(randomMass);
+    randomMass = findPath(randomMass);
+    population.push(randomMass);
+  }
+  return population;
+}
+
+function findPath(randomMass) {
+  var sumOfPaths = 0,
+    x = 0,
+    y = 0,
+    s = 0;
+
+  for (let i = 0; i < randomMass.length; i++) {
+    x = dots[randomMass[i]][0];
+    y = dots[randomMass[i]][1];
+
+    if (i < randomMass.length - 1)
+      s = Math.sqrt(
+        (x - dots[randomMass[i + 1]][0]) ** 2 +
+          (y - dots[randomMass[i + 1]][1]) ** 2
+      );
+    else
+      s = Math.sqrt(
+        (x - dots[randomMass[0]][0]) ** 2 + (y - dots[randomMass[0]][1]) ** 2
+      );
+    sumOfPaths += s;
   }
 
-  population = newPopulation;
-
-  iteration++;
-  requestAnimationFrame(loop);
+  randomMass.push(sumOfPaths);
+  return randomMass;
 }

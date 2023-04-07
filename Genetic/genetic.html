@@ -10,7 +10,7 @@
 
 <body>
   <div class="sidenav">
-    <a href="../a-star/a-star_view.html">А*</a>
+    <a href="../A_star/a_star.html">А*</a>
     <a href="../Genetic/genetic.html">Генетиеский Алгоритм</a>
 
   </div>
@@ -19,21 +19,26 @@
   <div class="wrapper">
 
     <div class="canvas_block">
-      <canvas id="canvas" width="700px" height="700px"></canvas>
+      <canvas id="canvas" width="800px" height="730px"></canvas>
+        <script src="./genetic.js"></script>
+    
     </div>
 
     <div class="main">
       <div class="Options_block">
-       
-          <button class="btn" onclick="">Начать</button>
-          <button class="btn" onclick="">Стоп</button>
-          <button class="btn" onclick="canvas.clear()">Очистить</button>
+        <button class="btn" onclick="clearFull()">Очистить</button>
+        <button class="btn" onclick="start()">Начать</button>
+        <button class="btn" onclick="stopAll()">Стоп</button>
+        <button class="btn" onclick="addRandomPoint(1)">addRandomPoint</button>
 
-      </div>
+        <input id="dotsCount" type="range" min="1" max="200" value="10" class="range" oninput="updateRangeValue(this.value)" onchange="clearFull(); addRandomPoint()">
+        <span id="rangeValue">10</span>
+        
+        </div>
     </div>
     <div>
-      <script src="a_star.js"></script>
-    
+      
+
 </body>
 
 </html>
