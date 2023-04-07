@@ -1,4 +1,4 @@
-const Fcolor = "#1bc2ae";
+const Fcolor = "purple";
 
 var canvas = document.getElementById("canvas"),
   ctx = canvas.getContext("2d");
@@ -13,10 +13,7 @@ canvas.addEventListener("mousedown", function (e) {
   x = e.pageX - this.offsetLeft;
   y = e.pageY - this.offsetTop;
   dots.push([x, y]);
-  ctx.beginPath();
-  ctx.arc(x, y, 8, 0, Math.PI * 2);
-  ctx.fillStyle = Fcolor;
-  ctx.fill();
+  drawDots();
 });
 
 function clearFull() {
@@ -38,12 +35,30 @@ const delay = (delayInms) => {
   return new Promise((resolve) => setTimeout(resolve, delayInms));
 };
 
+// function drawDots() {
+//   ctx.fillStyle = Fcolor;
+//   dots.forEach((dot) => {
+//     ctx.beginPath();
+//     ctx.arc(dot[0], dot[1], 8, 0, Math.PI * 2);
+//     ctx.fill();
+//   });
+// }
+
+// Создаем объект Image
+const img = new Image();
+img.src =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOW6rJAN7WMvV_81Lc_cmlRCYa4M-tRPw4wA&usqp=CAU";
+
+// Добавляем обработчик события load, чтобы нарисовать изображение
+img.addEventListener("load", () => {
+  drawDots();
+});
+
 function drawDots() {
-  ctx.fillStyle = "#1bc2ae";
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   dots.forEach((dot) => {
-    ctx.beginPath();
-    ctx.arc(dot[0], dot[1], 8, 0, Math.PI * 2);
-    ctx.fill();
+    // Вызываем метод drawImage вместо ctx.arc
+    ctx.drawImage(img, dot[0], dot[1], 20, 20);
   });
 }
 
@@ -53,16 +68,12 @@ function stopAll() {
 
 function createPath(bestPath) {
   ctx.clearRect(0, 0, 800, 730);
-  for (let i = 0; i < dots.length; i++) {
-    ctx.beginPath();
-    ctx.arc(dots[i][0], dots[i][1], 8, 0, Math.PI * 2);
-    ctx.fill();
-  }
+  drawDots();
 
   for (i = 0; i < bestPath.length - 2; i++) {
     ctx.beginPath();
-    ctx.lineWidth = 7;
-    ctx.strokeStyle = "black";
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "green";
     ctx.moveTo(dots[bestPath[i]][0], dots[bestPath[i]][1]);
     ctx.lineTo(dots[bestPath[i + 1]][0], dots[bestPath[i + 1]][1]);
     ctx.closePath();
@@ -90,18 +101,10 @@ function addRandomPoint() {
   }
   drawDots();
 }
-// function addRandomPoint() {
-//   var x = getRandom(0, canvas.width);
-//   var y = getRandom(0, canvas.height);
-//   dots.push([x, y]);
-//   ctx.beginPath();
-//   ctx.arc(x, y, 8, 0, Math.PI * 2);
-//   ctx.fillStyle = Fcolor;
-//   ctx.fill();
-// }
+
 //Служебные функции для отрисовки пути и точек
 //////////////////////////////////////////////////////////////////////////////////////////////////
-
+//https://www.geeksforgeeks.org/traveling-salesman-problem-using-genetic-algorithm/
 async function start() {
   counterVal = 0;
   if (dots.length > 1) {
@@ -266,6 +269,7 @@ function createPopulation(population) {
   return population;
 }
 
+//Вычисление длины пути
 function findPath(randomMass) {
   var sumOfPaths = 0,
     x = 0,
