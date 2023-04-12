@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/clustering.css" />
+    <title>CLustering</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clustering">
+        <div class="clustering__sheet"></div>
+        <div class="clustering__panel">
+          <label class="clustering__label" for="countOfClasters"
+            >Количество кластеров</label
+          >
+          <input
+            value="1"
+            id="countOfClasters"
+            name="countOfClasters"
+            type="text"
+            class="clustering__input"
+          />
+          <button id="kMiddle" class="clustering__button">k-means plus</button>
+          <button class="clustering__button">hierarchical</button>
+          <label class="clustering__label" for="radius">Радиус</label>
+          <input
+            value="0"
+            id="radius"
+            name="radius"
+            type="text"
+            class="clustering__input"
+          />
+          <label class="clustering__label" for="minCountOfNumbers"
+            >Минимальное количество чисел</label
+          >
+          <input
+            value="0"
+            id="minCountOfNumbers"
+            name="minCountOfNumbers"
+            type="text"
+            class="clustering__input"
+          />
+          <button id="DBSCAN" class="clustering__button">DBSCAN</button>
+          <button id="clearPoints" class="clustering__button">Clear</button>
+          <a href="antAlgorithm.html">ant-algorithm</a>
+        </div>
+      </div>
+    </div>
+    <script src="../js/clustering.js"></script>
+  </body>
+</html>

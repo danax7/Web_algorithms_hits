@@ -1,0 +1,135 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active,
+a,
+a:visited,
+a:hover {
+  outline: none;
+  text-decoration: none;
+  color: white;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgb(40, 40, 40);
+}
+
+.clustering {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 75px;
+}
+.clustering__sheet {
+  position: relative;
+  cursor: pointer;
+  background-color: rgb(70, 70, 70);
+  width: 400px;
+  height: 400px;
+}
+.clustering__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+.clustering__button {
+  font-size: 18px;
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 3px;
+  color: white;
+}
+.clustering__input {
+  padding-left: 5px;
+  color: white;
+  height: 25px;
+  width: 100%;
+  background-color: rgb(100, 100, 100);
+}
+.clustering__label {
+  font-size: 18px;
+  color: white;
+}
+.clustering__point {
+  background-color: white;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+}
