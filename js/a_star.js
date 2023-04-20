@@ -10,6 +10,29 @@ var canvas = document.getElementById("canvas");
 var contex = canvas.getContext("2d");
 var speed = 3;
 
+if (window.innerWidth < 1100) {
+  canvas.width = 650;
+  canvas.height = 650;
+}
+
+if (window.innerWidth < 800) {
+  canvas.width = 550;
+  canvas.height = 550;
+}
+
+if (window.innerWidth < 600) {
+  canvas.width = 420;
+  canvas.height = 420;
+}
+
+if (window.innerWidth < 450) {
+  canvas.width = 330;
+  canvas.height = 330;
+}
+// window.addEventListener("resize", () => {
+//   CreateMazes();
+// });
+
 class Cell {
   constructor(x, y) {
     this.x = x;
@@ -175,7 +198,7 @@ function isValidMaze(matrix) {
 
 //обработчики событий
 canvas.clear = function () {
-  contex.clearRect(0, 0, 730, 730);
+  contex.clearRect(0, 0, 700, 700);
   startCords = new Cell(0, 0);
   finishCords = new Cell(0, 0);
   FinishButton = false;
