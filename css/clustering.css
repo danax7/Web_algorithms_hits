@@ -96,40 +96,63 @@ h6 {
   align-items: center;
   gap: 75px;
 }
+
 .clustering__sheet {
   position: relative;
   cursor: pointer;
   background-color: rgb(70, 70, 70);
-  width: 400px;
-  height: 400px;
+  width: 450px;
+  height: 450px;
 }
-.clustering__panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-}
-.clustering__button {
-  font-size: 18px;
-  border: 1px solid rgb(100, 100, 100);
-  border-radius: 3px;
-  color: white;
-}
-.clustering__input {
-  padding-left: 5px;
-  color: white;
-  height: 25px;
-  width: 100%;
-  background-color: rgb(100, 100, 100);
-}
+
 .clustering__label {
   font-size: 18px;
   color: white;
 }
 .clustering__point {
   background-color: white;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+.clustering__point div {
+  flex: 1 1 50%;
+}
+
+.Options_block {
+  flex-direction: column;
+}
+.canvas_block {
+  position: relative;
+  cursor: pointer;
+  background-color: rgb(70, 70, 70);
+  width: 450px;
+  height: 450px;
+}
+
+@media screen and (max-width: 800px) {
+  .canvas_block {
+    width: 320px;
+    height: 320px;
+  }
+}
+@media screen and (max-width: 500px) {
+  .canvas_block {
+    width: 330px;
+    height: 330px;
+  }
+  .clustering__sheet {
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(70, 70, 70);
+    width: 330px;
+    height: 330px;
+  }
+}
+.clustering {
+  flex-wrap: wrap;
 }
