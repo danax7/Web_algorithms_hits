@@ -309,6 +309,7 @@ body.dark .switch::before {
   padding: 12px 60px;
   margin-left: 50px;
   width: 96%;
+  justify-content: center;
 }
 
 .sidebar.close ~ .home {
@@ -316,7 +317,7 @@ body.dark .switch::before {
   height: 100vh;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1200px) {
   .home .text {
     padding: 12px 20px;
     margin-left: 10px;
@@ -351,7 +352,7 @@ body.dark .home .text {
 /* Main content styles */
 .wrapper {
   width: 100%;
-  background-color: #fff;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -374,11 +375,23 @@ canvas {
 .Options_block {
   flex: 1 0 25%;
   min-width: 200px;
-  max-width: 500px;
-  border: #000 solid 1px;
+  max-width: 600px;
+  /* border: #000 solid 1px; */
   padding-left: 3%;
   padding-right: 3%;
   padding-top: 5%;
+
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+@media screen and (max-width: 1200px) {
+  .Options_block {
+    display: flex;
+  }
 }
 
 .Options_block .Text {
@@ -398,16 +411,22 @@ canvas {
 .Options_block .btn {
   display: block;
   width: 30%;
-  min-width: 110px;
+  min-width: 160px;
   margin: 10px 0;
+  margin-left: 3px;
   padding: 10px;
-  background-color: #4caf50;
-  color: white;
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 18px;
 }
 
 .Options_block .btn:hover {
-  background-color: #3e8e41;
+  box-shadow: 0 0 10px 0 var(--primary-color);
 }
+
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
