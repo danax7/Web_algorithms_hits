@@ -94,7 +94,7 @@ h6 {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 75px;
+  /* gap: 75px; */
 }
 .ant-algorithm__sheet {
   position: relative;
@@ -122,7 +122,8 @@ h6 {
   background-color: rgb(100, 100, 100);
 }
 .ant-algorithm__label {
-  font-size: 18px;
+  padding-bottom: 10px;
+  padding-top: 10px;
   color: white;
 }
 .ant-algorithm__point {
