@@ -4,78 +4,192 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/test.css" />
+    <link rel="stylesheet" href="../css/clustering.css" />
     <link rel="stylesheet" href="../css/antAlgorithms.css" />
-    <title>antAlgorithms</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="wrapper">
-      <div class="ant-algorithm">
-        <div class="ant-algorithm__sheet"></div>
-        <div class="ant-algorithm__panel">
-          <label class="ant-algorithm__label" for="countOfAnts"
-            >Количество муравьёв</label
-          >
-          <input
-            value="50"
-            id="countOfAnts"
-            name="countOfAnts"
-            type="text"
-            class="ant-algorithm__input"
-          />
-          <label class="ant-algorithm__label" for="countOfIterations"
-            >Количество итераций</label
-          >
-          <input
-            value="100"
-            id="countOfIterations"
-            name="countOfIterations"
-            type="text"
-            class="ant-algorithm__input"
-          />
-          <label class="ant-algorithm__label" for="alpha">alpha</label>
-          <input
-            value="1"
-            id="alpha"
-            name="alpha"
-            type="text"
-            class="ant-algorithm__input"
-          />
-          <label class="ant-algorithm__label" for="beta">beta</label>
-          <input
-            value="2"
-            id="beta"
-            name="beta"
-            type="text"
-            class="ant-algorithm__input"
-          />
-          <label class="ant-algorithm__label" for="initialPheromone"
-            >Изначальный феромон</label
-          >
-          <input
-            value="1"
-            id="initialPheromone"
-            name="initialPheromone"
-            type="text"
-            class="ant-algorithm__input"
-          />
-          <label class="ant-algorithm__label" for="evaporationRate"
-            >Коэффициент испарения феромонов</label
-          >
-          <input
-            value="0.3"
-            id="evaporationRate"
-            name="evaporationRate"
-            type="text"
-            class="ant-algorithm__input"
-          />
+    <nav class="sidebar close">
+      <header>
+        <div class="image-text">
+          <span class="image">
+            <!--<img src="logo.png" alt="">-->
+          </span>
 
-          <button id="start" class="ant-algorithm__button">Go</button>
-          <p class="ant-algorithm__text">
-            Длина пути: <span id="result">0</span>
-          </p>
+          <div class="text logo-text">
+            <span class="name">Hits</span>
+            <span class="profession">Web</span>
+          </div>
+        </div>
+        <div class="close-btn">
+          <i class="bx bx-menu bx-md toggle"></i>
+        </div>
+      </header>
+
+      <div class="menu-bar">
+        <div class="menu">
+          <ul class="menu-links">
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bx-home-alt icon"></i>
+                <span class="text nav-text">Главная</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
+              <a href="test.html">
+                <i class="bx bx-map-alt icon"></i>
+                <span class="text nav-text">A*</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
+              <a href="clustering.html">
+                <i class="bx bxs-shapes icon"></i>
+                <span class="text nav-text">Кластеризация</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
+              <a href="antAlgorithm.html">
+                <i class="bx bx-bug icon"></i>
+                <span class="text nav-text">Муравьиный</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
+              <a href="./genetic.html">
+                <i class="bx bx-dna icon"></i>
+                <span class="text nav-text">Генетический</span>
+              </a>
+            </li>
+
+            <li class="nav-link">
+              <a href="#">
+                <i class="bx bxs-tree icon"></i>
+                <!-- <i class="bx bx-tree icon"></i> -->
+                <span class="text nav-text">Дерево решений</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bottom-content">
+          <li class="mode">
+            <div class="sun-moon">
+              <i class="bx bx-moon icon moon"></i>
+              <i class="bx bx-sun icon sun"></i>
+            </div>
+            <span class="mode-text text">Dark mode</span>
+
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
         </div>
       </div>
-    </div>
+    </nav>
+
+    <section class="home">
+      <div class="text">
+        <div class="clustering">
+          <div class="clustering__sheet"></div>
+          <div class="Options_block">
+            <label class="ant-algorithm__label" for="countOfAnts"
+              >Количество муравьёв</label
+            >
+            <input
+              value="50"
+              id="countOfAnts"
+              name="countOfAnts"
+              type="text"
+              class="ant-algorithm__input"
+            />
+            <label class="ant-algorithm__label" for="countOfIterations"
+              >Количество итераций</label
+            >
+            <input
+              value="100"
+              id="countOfIterations"
+              name="countOfIterations"
+              type="text"
+              class="ant-algorithm__input"
+            />
+            <label class="ant-algorithm__label" for="alpha">alpha</label>
+            <input
+              value="1"
+              id="alpha"
+              name="alpha"
+              type="text"
+              class="ant-algorithm__input"
+            />
+            <label class="ant-algorithm__label" for="beta">beta</label>
+            <input
+              value="2"
+              id="beta"
+              name="beta"
+              type="text"
+              class="ant-algorithm__input"
+            />
+            <label class="ant-algorithm__label" for="initialPheromone"
+              >Изначальный феромон</label
+            >
+            <input
+              value="1"
+              id="initialPheromone"
+              name="initialPheromone"
+              type="text"
+              class="ant-algorithm__input"
+            />
+            <label class="ant-algorithm__label" for="evaporationRate"
+              >Коэффициент испарения феромонов</label
+            >
+            <input
+              value="0.3"
+              id="evaporationRate"
+              name="evaporationRate"
+              type="text"
+              class="ant-algorithm__input"
+            />
+
+            <button id="start" class="btn">Go</button>
+            <p class="ant-algorithm__text">
+              Длина пути: <span id="result">0</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const body = document.querySelector("body"),
+        sidebar = body.querySelector("nav"),
+        toggle = body.querySelector(".toggle"),
+        modeSwitch = body.querySelector(".toggle-switch"),
+        modeText = body.querySelector(".mode-text");
+
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("close");
+      });
+
+      body.classList.toggle("dark");
+
+      modeSwitch.addEventListener("click", () => {
+        body.classList.toggle("dark");
+
+        if (body.classList.contains("dark")) {
+          modeText.innerText = "Light mode";
+        } else {
+          modeText.innerText = "Dark mode";
+        }
+      });
+    </script>
+    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="../js/antAlgorithm.js"></script>
   </body>
 </html>
