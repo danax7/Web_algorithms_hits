@@ -310,6 +310,7 @@ body.dark .switch::before {
   margin-left: 50px;
   width: 96%;
   justify-content: center;
+  /* height: 100vh; */
 }
 
 .sidebar.close ~ .home {
