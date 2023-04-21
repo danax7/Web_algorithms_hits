@@ -313,7 +313,7 @@ body.dark .switch::before {
 }
 
 .sidebar.close ~ .home {
-  left: 78px;
+  left: 0px;
   height: 100vh;
 }
 

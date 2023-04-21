@@ -8,6 +8,26 @@ constMutation = 10;
 ConstRelativeChance = 10;
 const populationSize = 100;
 
+if (window.innerWidth < 1100) {
+  canvas.width = 650;
+  canvas.height = 650;
+}
+
+if (window.innerWidth < 800) {
+  canvas.width = 550;
+  canvas.height = 550;
+}
+
+if (window.innerWidth < 600) {
+  canvas.width = 420;
+  canvas.height = 420;
+}
+
+if (window.innerWidth < 450) {
+  canvas.width = 330;
+  canvas.height = 330;
+}
+
 canvas.addEventListener("mousedown", function (e) {
   var x, y;
   x = e.pageX - this.offsetLeft;
@@ -17,7 +37,7 @@ canvas.addEventListener("mousedown", function (e) {
 });
 
 function clearFull() {
-  ctx.clearRect(0, 0, 800, 730);
+  ctx.clearRect(0, 0, 650, 650);
   ctx.fillStyle = "black";
   dots = [];
   flag = false;
@@ -67,7 +87,7 @@ function stopAll() {
 }
 
 function createPath(bestPath) {
-  ctx.clearRect(0, 0, 800, 730);
+  ctx.clearRect(0, 0, 650, 650);
   drawDots();
 
   for (i = 0; i < bestPath.length - 2; i++) {
@@ -95,9 +115,11 @@ function updateRangeValue(value) {
 }
 
 function addRandomPoint() {
+  canvas_height = canvas.height;
+  canvas_width = canvas.width;
   const count = document.getElementById("dotsCount").value;
   for (let i = 0; i < count; i++) {
-    dots.push([getRandom(0, 800), getRandom(0, 730)]);
+    dots.push([getRandom(0, canvas_height), getRandom(0, canvas_width)]);
   }
   drawDots();
 }
