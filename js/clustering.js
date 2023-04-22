@@ -1,3 +1,22 @@
+//параметры
+const countOfClasters = document.getElementById("countOfClasters");
+const radius = document.getElementById("radius");
+const minCountOfNumbers = document.getElementById("minCountOfNumbers");
+//кнопки, точки и поля
+const sheet = document.querySelector(".clustering__sheet");
+const kMeansButton = document.querySelector("#kMeans");
+const DBSCANButton = document.querySelector("#DBSCAN");
+const hierarchicalButton = document.querySelector("#hierarchical");
+const clearButton = document.querySelector("#clearPoints");
+const comparisonButton = document.querySelector("#comparison");
+const collecionOfPoints = document.getElementsByClassName("clustering__point");
+
+const COLORS = [...Array(10)].map(
+  (element) =>
+    `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
+);
+console.log(COLORS);
+
 const getDistance = (firstElement, secondElement) =>
   Math.sqrt(
     Math.pow(firstElement.x - secondElement.x, 2) +
@@ -65,8 +84,8 @@ const kMeansPlus = (klasters, points) => {
 };
 
 const DBSCAN = (points, radius, minNumber) => {
-  let clustersOfPoints = points.map(() => {
-    -1;
+  let clustersOfPoints = points.map((element) => {
+    return [];
   });
   let indexes = [];
   points.forEach((element, index) => {
@@ -77,7 +96,13 @@ const DBSCAN = (points, radius, minNumber) => {
     });
     if (indexes.length >= minNumber) {
       indexes.forEach((element2) => {
-        clustersOfPoints[element2] = index;
+        clustersOfPoints[element2].push(index);
+        for (const point of indexes) {
+          clustersOfPoints[point].forEach((element3) => {
+            if (!clustersOfPoints[element2].includes(element3))
+              clustersOfPoints[element2].push(element3);
+          });
+        }
       });
     }
     indexes.length = 0;
@@ -88,12 +113,16 @@ const DBSCAN = (points, radius, minNumber) => {
   clustersOfPoints.forEach((element, index) => {
     groups[lastIndex] = [];
     clustersOfPoints.forEach((element2, index2) => {
-      if (element2 == index) groups[lastIndex].push(index2);
+      if (element2.includes(index)) {
+        clustersOfPoints[index2].length = 0;
+        groups[lastIndex].push(index2);
+      }
     });
     if (groups[lastIndex].length != 0) lastIndex++;
   });
 
   if (!groups[groups.length - 1].length) groups.length--;
+
   return groups;
 };
 
@@ -152,23 +181,6 @@ const hierarchical = (points, countOfClasters) => {
   return newGroups;
 };
 
-//параметры
-const countOfClasters = document.getElementById("countOfClasters");
-const radius = document.getElementById("radius");
-const minCountOfNumbers = document.getElementById("minCountOfNumbers");
-//кнопки, точки и поля
-const sheet = document.querySelector(".clustering__sheet");
-const kMeansButton = document.querySelector("#kMeans");
-const DBSCANButton = document.querySelector("#DBSCAN");
-const hierarchicalButton = document.querySelector("#hierarchical");
-const clearButton = document.querySelector("#clearPoints");
-const comparisonButton = document.querySelector("#comparison");
-const collecionOfPoints = document.getElementsByClassName("clustering__point");
-
-const COLORS = [...Array(10)].map(
-  (element) =>
-    `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
-);
 let points = [];
 let isTogether = false;
 let resultsOfAlgorithms = {};
