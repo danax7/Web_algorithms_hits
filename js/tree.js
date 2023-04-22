@@ -164,7 +164,8 @@ const drawLines = (node) => {
         sheet.getBoundingClientRect().x,
       y:
         secondElement.getBoundingClientRect().y -
-        sheet.getBoundingClientRect().y,
+        sheet.getBoundingClientRect().y +
+        20,
       width: secondElement.getBoundingClientRect().width,
     };
     drawLine(firstElementCoords, secondElementCoords, secondNode.property);

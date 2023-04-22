@@ -136,10 +136,11 @@ async function start() {
     createPopulation(population);
     while (flag) {
       getCross(population);
-      population = selection(population);
+      population = selection(population); //передаем в фукнцию наилучшего потомка
       createPath(population[0]);
       count++;
-      await delay(5);
+      console.log(count);
+      await delay(0);
     }
   } else alert("Необходимо как минимум две точки");
 }
@@ -212,7 +213,7 @@ function getCross(population) {
 
     if (getRandom(0, 100) > constMutation) childFirst = mutation(childFirst);
     if (getRandom(0, 100) > constMutation) childSecond = mutation(childSecond);
-    childFirst = findPath(childFirst);
+    childFirst = findPath(childFirst); //определям вес для каждого ребенка
     childSecond = findPath(childSecond);
     population.push(childFirst);
     population.push(childSecond);
@@ -307,6 +308,7 @@ function findPath(randomMass) {
         (x - dots[randomMass[i + 1]][0]) ** 2 +
           (y - dots[randomMass[i + 1]][1]) ** 2
       );
+    //формула Евклида
     else
       s = Math.sqrt(
         (x - dots[randomMass[0]][0]) ** 2 + (y - dots[randomMass[0]][1]) ** 2
