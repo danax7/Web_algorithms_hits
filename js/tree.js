@@ -142,16 +142,17 @@ function drawLine(element, element2, property) {
   sheet.append(line);
   sheet.append(propertyElement);
 }
-
 const drawLines = (node) => {
   const firstElement = document.getElementById(node.id);
   const firstElementCoords = {
     x:
       firstElement.getBoundingClientRect().x +
-      firstElement.getBoundingClientRect().width / 2,
+      firstElement.getBoundingClientRect().width / 2 -
+      sheet.getBoundingClientRect().x,
     y:
       firstElement.getBoundingClientRect().y +
-      +firstElement.getBoundingClientRect().height / 2,
+      +firstElement.getBoundingClientRect().height / 2 -
+      sheet.getBoundingClientRect().y,
     width: firstElement.getBoundingClientRect().width,
   };
   for (const secondNode of node.child) {
@@ -159,8 +160,11 @@ const drawLines = (node) => {
     const secondElementCoords = {
       x:
         secondElement.getBoundingClientRect().x +
-        secondElement.getBoundingClientRect().width / 2,
-      y: secondElement.getBoundingClientRect().y,
+        secondElement.getBoundingClientRect().width / 2 -
+        sheet.getBoundingClientRect().x,
+      y:
+        secondElement.getBoundingClientRect().y -
+        sheet.getBoundingClientRect().y,
       width: secondElement.getBoundingClientRect().width,
     };
     drawLine(firstElementCoords, secondElementCoords, secondNode.property);
