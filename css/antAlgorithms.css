@@ -190,3 +190,23 @@ body.dark {
   font-size: 20px;
   text-align: center;
 }
+
+@media screen and (max-width: 500px) {
+  .canvas_block {
+    width: 330px;
+    height: 330px;
+  }
+  .clustering__sheet {
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(70, 70, 70);
+    width: 330px;
+    height: 330px;
+  }
+  .Options_block {
+    padding-top: 0%;
+  }
+}
+.clustering {
+  flex-wrap: wrap;
+}
