@@ -1,0 +1,319 @@
+const Fcolor = "purple";
+
+var canvas = document.getElementById("canvas"),
+  ctx = canvas.getContext("2d");
+var dots = [];
+var flag = true;
+constMutation = 10;
+ConstRelativeChance = 10;
+const populationSize = 100;
+
+if (window.innerWidth < 1100) {
+  canvas.width = 650;
+  canvas.height = 650;
+}
+
+if (window.innerWidth < 800) {
+  canvas.width = 550;
+  canvas.height = 550;
+}
+
+if (window.innerWidth < 600) {
+  canvas.width = 420;
+  canvas.height = 420;
+}
+
+if (window.innerWidth < 450) {
+  canvas.width = 330;
+  canvas.height = 330;
+}
+
+canvas.addEventListener("mousedown", function (e) {
+  var x, y;
+  x = e.pageX - this.offsetLeft;
+  y = e.pageY - this.offsetTop;
+  dots.push([x, y]);
+  drawDots();
+});
+
+function clearFull() {
+  ctx.clearRect(0, 0, 650, 650);
+  ctx.fillStyle = "black";
+  dots = [];
+  flag = false;
+}
+
+var counterVal = 0;
+
+function getRandom(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min; //Максимум и минимум включаются
+}
+
+const delay = (delayInms) => {
+  return new Promise((resolve) => setTimeout(resolve, delayInms));
+};
+
+// function drawDots() {
+//   ctx.fillStyle = Fcolor;
+//   dots.forEach((dot) => {
+//     ctx.beginPath();
+//     ctx.arc(dot[0], dot[1], 8, 0, Math.PI * 2);
+//     ctx.fill();
+//   });
+// }
+
+// Создаем объект Image
+const img = new Image();
+img.src =
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOW6rJAN7WMvV_81Lc_cmlRCYa4M-tRPw4wA&usqp=CAU";
+
+// Добавляем обработчик события load, чтобы нарисовать изображение
+img.addEventListener("load", () => {
+  drawDots();
+});
+
+function drawDots() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  dots.forEach((dot) => {
+    // Вызываем метод drawImage вместо ctx.arc
+    ctx.drawImage(img, dot[0], dot[1], 20, 20);
+  });
+}
+
+function stopAll() {
+  flag = false;
+}
+
+function createPath(bestPath) {
+  ctx.clearRect(0, 0, 650, 650);
+  drawDots();
+
+  for (i = 0; i < bestPath.length - 2; i++) {
+    ctx.beginPath();
+    ctx.lineWidth = 5;
+    ctx.strokeStyle = "green";
+    ctx.moveTo(dots[bestPath[i]][0], dots[bestPath[i]][1]);
+    ctx.lineTo(dots[bestPath[i + 1]][0], dots[bestPath[i + 1]][1]);
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(dots[bestPath[0]][0], dots[bestPath[0]][1]);
+  ctx.lineTo(
+    dots[bestPath[bestPath.length - 2]][0],
+    dots[bestPath[bestPath.length - 2]][1]
+  );
+  ctx.closePath();
+  ctx.stroke();
+}
+
+function updateRangeValue(value) {
+  document.getElementById("rangeValue").innerHTML = value;
+}
+
+function addRandomPoint() {
+  canvas_height = canvas.height;
+  canvas_width = canvas.width;
+  const count = document.getElementById("dotsCount").value;
+  for (let i = 0; i < count; i++) {
+    dots.push([getRandom(0, canvas_height), getRandom(0, canvas_width)]);
+  }
+  drawDots();
+}
+
+//Служебные функции для отрисовки пути и точек
+//////////////////////////////////////////////////////////////////////////////////////////////////
+//https://www.geeksforgeeks.org/traveling-salesman-problem-using-genetic-algorithm/
+async function start() {
+  counterVal = 0;
+  if (dots.length > 1) {
+    flag = true;
+    var population = [],
+      count = 0;
+    createPopulation(population);
+    while (flag) {
+      getCross(population);
+      population = selection(population);
+      createPath(population[0]);
+      count++;
+      await delay(5);
+    }
+  } else alert("Необходимо как минимум две точки");
+}
+
+//Алоритм скрещивания
+//Генерация новых хромосом из двух родительских в популяции
+//https://www.youtube.com/watch?v=ufAHNtZkO_A
+function getCross(population) {
+  var randomParents = [];
+
+  for (let i = 0; i < populationSize; i++) {
+    randomParents[i] = getRandom(0, 100);
+  }
+
+  var IndexParents = [];
+
+  for (let i = 0; i < populationSize; i++) {
+    if (randomParents[i] > ConstRelativeChance) IndexParents.push(i);
+  }
+
+  if (IndexParents.length % 2 !== 0) IndexParents.pop();
+  var childFirst = [],
+    childSecond = [],
+    parentSizeOne = 0,
+    parentSizeTwo = 0;
+
+  if (dots.length % 2 === 0) {
+    parentSizeOne = Math.floor(dots.length / 2);
+    parentSizeTwo = Math.floor(dots.length / 2);
+  } else {
+    parentSizeOne = Math.floor(dots.length / 2);
+    parentSizeTwo = Math.floor(dots.length / 2) + 1;
+  }
+
+  // Все эти циклы помогают создать два потомка,
+  // каждый из которых получен из двух родительских хромосом.
+  // Элементы добавляются в потомков таким образом, чтобы они не дублировались,
+  // и было максимально сохранено наследие обоих родительских хромосом.
+
+  for (let i = 0; i < IndexParents.length - 1; i += 2) {
+    (childFirst = []), (childSecond = []);
+
+    for (let indexX = 0; indexX < parentSizeOne; indexX++) {
+      childFirst.push(population[i][indexX]);
+    }
+
+    for (let indexY = parentSizeOne; indexY < dots.length; indexY++) {
+      if (!childFirst.includes(population[i + 1][indexY]))
+        childFirst.push(population[i + 1][indexY]);
+    }
+
+    for (let indexX = 0; indexX < dots.length; indexX++) {
+      if (!childFirst.includes(population[i][indexX]))
+        childFirst.push(population[i][indexX]);
+    }
+
+    for (let indexX = 0; indexX < parentSizeOne; indexX++) {
+      childSecond.push(population[i + 1][indexX]);
+    }
+
+    for (let indexY = parentSizeOne; indexY < dots.length; indexY++) {
+      if (!childSecond.includes(population[i][indexY]))
+        childSecond.push(population[i][indexY]);
+    }
+
+    for (let indexX = 0; indexX < dots.length; indexX++) {
+      if (!childSecond.includes(population[i + 1][indexX]))
+        childSecond.push(population[i + 1][indexX]);
+    }
+
+    if (getRandom(0, 100) > constMutation) childFirst = mutation(childFirst);
+    if (getRandom(0, 100) > constMutation) childSecond = mutation(childSecond);
+    childFirst = findPath(childFirst);
+    childSecond = findPath(childSecond);
+    population.push(childFirst);
+    population.push(childSecond);
+  }
+}
+
+function mutation(child) {
+  var mut = [];
+  var i = getRandom(0, child.length - 1);
+  var j = getRandom(0, child.length - 1);
+  while (i === j) {
+    j = getRandom(0, child.length - 1);
+  }
+  var maxx = Math.max(i, j);
+  var minn = Math.min(i, j);
+  mut = child.slice(minn, maxx + 1);
+  mut.reverse();
+  for (let h = minn, g = 0; h <= maxx; h++) {
+    child[h] = mut[g];
+    g++;
+  }
+  return child;
+}
+
+function selection(population) {
+  var newPopulation = [];
+
+  while (newPopulation.length < populationSize) {
+    var minn = 1000000,
+      gen = [],
+      constI = 0;
+    for (let i = 0; i < population.length; i++) {
+      if (
+        population[i] !== undefined &&
+        minn > population[i][dots.length] &&
+        newPopulation.includes(gen) !== true
+      ) {
+        minn = population[i][dots.length];
+
+        gen = population[i];
+        constI = i;
+      }
+    }
+
+    newPopulation.push(gen);
+  }
+
+  return newPopulation;
+}
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+function createPopulation(population) {
+  for (let i = 0; i < populationSize; i++) {
+    var randomMass = [];
+    for (let i = 0; i < dots.length; i++) {
+      randomMass.push(i);
+    }
+    randomMass = shuffle(randomMass);
+    randomMass = findPath(randomMass);
+    population.push(randomMass);
+  }
+  return population;
+}
+
+//Вычисление длины пути
+function findPath(randomMass) {
+  var sumOfPaths = 0,
+    x = 0,
+    y = 0,
+    s = 0;
+
+  for (let i = 0; i < randomMass.length; i++) {
+    x = dots[randomMass[i]][0];
+    y = dots[randomMass[i]][1];
+
+    if (i < randomMass.length - 1)
+      s = Math.sqrt(
+        (x - dots[randomMass[i + 1]][0]) ** 2 +
+          (y - dots[randomMass[i + 1]][1]) ** 2
+      );
+    else
+      s = Math.sqrt(
+        (x - dots[randomMass[0]][0]) ** 2 + (y - dots[randomMass[0]][1]) ** 2
+      );
+    sumOfPaths += s;
+  }
+
+  randomMass.push(sumOfPaths);
+  return randomMass;
+}

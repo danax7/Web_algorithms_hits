@@ -1,0 +1,239 @@
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active,
+a,
+a:visited,
+a:hover {
+  outline: none;
+  text-decoration: none;
+  color: white;
+}
+
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+
+html,
+body {
+  height: 100%;
+  min-width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 16px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::-ms-clear {
+  display: none;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+}
+
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+ul li {
+  list-style: none;
+}
+
+img {
+  vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+input {
+  padding-left: 5px;
+}
+
+.tree {
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  min-width: 100%;
+  min-height: 100%;
+  background-color: rgb(40, 40, 40);
+}
+.tree__sheet {
+  overflow: auto;
+  position: relative;
+  padding: 10px 0 10px 10px;
+  flex: 1 1 400px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 100px;
+  border: 1px dashed #fff;
+}
+.tree__panel {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px dashed #fff;
+  flex: 0 1 30%;
+  max-height: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+}
+.tree__level {
+  gap: 100px;
+  display: flex;
+  align-items: center;
+}
+.tree__element {
+  padding: 1px 7px;
+  font-size: 18px;
+  border: 1px solid #fff;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+.tree__element:hover {
+  background-color: black;
+  z-index: 2;
+  font-size: 22px;
+}
+.tree__line {
+  position: absolute;
+  transform-origin: 0 0;
+  background-color: black;
+  height: 3px;
+  border-radius: 1px;
+}
+.tree__info {
+  padding: 2px;
+  border-radius: 3px;
+  border: 0.2px solid rgba(255, 255, 255, 0.5);
+  position: absolute;
+  transform-origin: 0 0;
+  font-size: 15px;
+  color: white;
+}
+.tree__info:hover {
+  background-color: black;
+  z-index: 2;
+  font-size: 18px;
+}
+.tree__property {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+#generateTree,
+#changeTree {
+  font-size: 20px;
+  color: white;
+}
+
+:root {
+  /* ===== Colors ===== */
+  --body-color: #e4e9f7;
+  --sidebar-color: #fff;
+  --primary-color: #695cfe;
+  --primary-color-light: #f6f5ff;
+  --toggle-color: #ddd;
+  --text-color: #707070;
+
+  /* ====== Transition ====== */
+  --tran-03: all 0.2s ease;
+  --tran-03: all 0.3s ease;
+  --tran-04: all 0.3s ease;
+  --tran-05: all 0.3s ease;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--body-color);
+  transition: var(--tran-05);
+}
+
+::selection {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+body.dark {
+  --body-color: #18191a;
+  --sidebar-color: #242526;
+  --primary-color: #3a3b3c;
+  --primary-color-light: #3a3b3c;
+  --toggle-color: #fff;
+  --text-color: #ccc;
+}
+
+.btn {
+  display: block;
+  width: 30%;
+  min-width: 160px;
+  margin: 10px 0;
+  margin-left: 3px;
+  padding: 10px;
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.btn:hover {
+  box-shadow: 0 0 10px 0 var(--primary-color);
+}
+
+.isLoaded {
+  text-align: center;
+  font-size: 22px;
+}
