@@ -165,7 +165,10 @@ const clearButton = document.querySelector("#clearPoints");
 const comparisonButton = document.querySelector("#comparison");
 const collecionOfPoints = document.getElementsByClassName("clustering__point");
 
-const COLORS = ["red", "green", "blue", "purple"];
+const COLORS = [...Array(10)].map(
+  (element) =>
+    `rgb(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255})`
+);
 let points = [];
 let isTogether = false;
 let resultsOfAlgorithms = {};

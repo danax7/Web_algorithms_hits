@@ -147,7 +147,7 @@ header .image-text .profession {
   height: 25px;
   width: 25px;
   /* background-color: var(--primary-color); */
-  color: var(--sidebar-color);
+  /* color: var(--sidebar-color); */
   /* border-radius: 50%; */
   display: flex;
   align-items: center;

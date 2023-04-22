@@ -69,7 +69,7 @@
             </li>
 
             <li class="nav-link">
-              <a href="#">
+              <a href="./tree.html">
                 <i class="bx bxs-tree icon"></i>
                 <!-- <i class="bx bx-tree icon"></i> -->
                 <span class="text nav-text">Дерево решений</span>
@@ -106,9 +106,14 @@
               value="50"
               id="countOfAnts"
               name="countOfAnts"
-              type="text"
+              type="range"
+              min="1"
+              max="200"
               class="ant-algorithm__input"
+              onchange="document.getElementById('rangeValue').innerHTML = this.value"
             />
+            <span id="rangeValue">50</span>
+
             <label class="ant-algorithm__label" for="countOfIterations"
               >Количество итераций</label
             >
@@ -116,25 +121,40 @@
               value="100"
               id="countOfIterations"
               name="countOfIterations"
-              type="text"
+              type="range"
               class="ant-algorithm__input"
+              min="50"
+              max="200"
+              onchange="document.getElementById('rangeValue2').innerHTML = this.value"
             />
+            <span id="rangeValue2">100</span>
+
             <label class="ant-algorithm__label" for="alpha">alpha</label>
             <input
               value="1"
               id="alpha"
               name="alpha"
-              type="text"
+              type="range"
               class="ant-algorithm__input"
+              min="1"
+              max="10"
+              onchange="document.getElementById('rangeValue3').innerHTML = this.value"
             />
+            <span id="rangeValue3">1</span>
+
             <label class="ant-algorithm__label" for="beta">beta</label>
             <input
               value="2"
               id="beta"
               name="beta"
-              type="text"
+              type="range"
               class="ant-algorithm__input"
+              min="1"
+              max="10"
+              onchange="document.getElementById('rangeValue4').innerHTML = this.value"
             />
+            <span id="rangeValue4">2</span>
+
             <label class="ant-algorithm__label" for="initialPheromone"
               >Изначальный феромон</label
             >
@@ -142,9 +162,14 @@
               value="1"
               id="initialPheromone"
               name="initialPheromone"
-              type="text"
+              type="range"
               class="ant-algorithm__input"
+              min="1"
+              max="10"
+              onchange="document.getElementById('rangeValue5').innerHTML = this.value"
             />
+            <span id="rangeValue5">1</span>
+
             <label class="ant-algorithm__label" for="evaporationRate"
               >Коэффициент испарения феромонов</label
             >
@@ -152,9 +177,14 @@
               value="0.3"
               id="evaporationRate"
               name="evaporationRate"
-              type="text"
+              type="range"
               class="ant-algorithm__input"
+              min="0"
+              max="2"
+              step="0.1"
+              onchange="document.getElementById('rangeValue6').innerHTML = this.value"
             />
+            <span id="rangeValue6">0.3</span>
 
             <button id="start" class="btn">Go</button>
             <p class="ant-algorithm__text">
